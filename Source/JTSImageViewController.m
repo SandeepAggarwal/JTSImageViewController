@@ -551,8 +551,8 @@ typedef struct {
     self.singleTapperPhoto.delegate = self;
     
     [self.view addGestureRecognizer:self.singleTapperPhoto];
-    [self.view addGestureRecognizer:self.doubleTapperPhoto];
-    [self.view addGestureRecognizer:self.longPresserPhoto];
+    // [self.view addGestureRecognizer:self.doubleTapperPhoto];
+    // [self.view addGestureRecognizer:self.longPresserPhoto];
     
     self.panRecognizer = [[UIPanGestureRecognizer alloc] init];
     self.panRecognizer.maximumNumberOfTouches = 1;
@@ -1751,13 +1751,14 @@ typedef struct {
     self.imageDragOffsetFromActualTranslation = translationOffset;
     CGPoint anchor = self.imageDragStartingPoint;
     CGPoint imageCenter = self.imageView.center;
-    UIOffset offset = UIOffsetMake(panGestureLocationInView.x-imageCenter.x, panGestureLocationInView.y-imageCenter.y);
+    UIOffset offset = UIOffsetMake(0, panGestureLocationInView.y-imageCenter.y);
     self.imageDragOffsetFromImageCenter = offset;
     self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.imageView offsetFromCenter:offset attachedToAnchor:anchor];
     [self.animator addBehavior:self.attachmentBehavior];
     UIDynamicItemBehavior *modifier = [[UIDynamicItemBehavior alloc] initWithItems:@[self.imageView]];
     modifier.angularResistance = [self appropriateAngularResistanceForView:self.imageView];
     modifier.density = [self appropriateDensityForView:self.imageView];
+    modifier.allowsRotation = NO;
     [self.animator addBehavior:modifier];
 }
 
